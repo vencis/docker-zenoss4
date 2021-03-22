@@ -50,7 +50,7 @@ services:
       - back-tier
 
   zenoss4-core:
-    image: mcroth/docker-zenoss4
+    image: internetportal/docker-zenoss4
     container_name: zenoss4-core
     restart: unless-stopped
     hostname: zenoss4-core
@@ -72,7 +72,7 @@ services:
     hostname: zenoss4-nginx
     restart: unless-stopped
     labels:
-      - traefik.frontend.rule=Host:zenossnew.domain.com
+      - traefik.frontend.rule=Host:zenoss.domain.com
       - traefik.port=80
       - traefik.enable=true
     volumes:
