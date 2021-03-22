@@ -1,5 +1,5 @@
 include .env_make
-NS = mcroth
+NS = internetportal
 VERSION ?= latest
 
 REPO = docker-zenoss4
