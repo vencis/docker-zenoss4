@@ -54,6 +54,7 @@ ARG ZENOSS_BUILD_DEPS_DEV="\
     net-tools \
     snmp \
     wget \
+    openssh-client \
     netcat \
     "
 
