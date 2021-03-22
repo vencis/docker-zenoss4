@@ -56,7 +56,8 @@ services:
     hostname: zenoss4-core
     volumes:
       - "./init_fs/usr/local/zenoss/log:/usr/local/zenoss/log:rw"
-#      - "./init_fs/usr/local/zenoss/ZenPacks:/usr/local/zenoss/ZenPacks:rw"
+      - "./init_fs/usr/local/zenoss/ZenPacks:/usr/local/zenoss/ZenPacks:rw"
+      - "./init_fs/home/zenoss/.ssh:/home/zenoss/.ssh:rw"
     links:
       - zenoss4-memcached
       - zenoss4-rabbitmq
