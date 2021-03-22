@@ -1,6 +1,6 @@
 ############################################################
 # Dockerfile - Zenoss v4.2.5-2108-03c on Debian Wheezy
-# https://github.com/krull/docker-zenoss4
+# https://github.com/vencis/docker-zenoss4
 ############################################################
 
 # set base image debian wheezy
@@ -73,27 +73,31 @@ RUN \
 ## init build env & install apt deps
     /usr/sbin/groupadd -g 999 zenoss \
     && /usr/sbin/useradd -m -u 999 -g 999 -s /bin/bash zenoss \
-    && /usr/bin/apt-get update \
+    && /bin/echo 'deb http://archive.debian.org/debian wheezy main' > /etc/apt/sources.list \
+    && /bin/echo 'deb http://archive.debian.org/debian-security wheezy/updates main' >> /etc/apt/sources.list \
+    && /usr/bin/apt-get update -o Acquire::Check-Valid-Until=false \
     && /usr/bin/apt-get -y --no-install-recommends install ${ZENOSS_BUILD_DEPS_DEV} ${ZENOSS_BUILD_DEPS_EXT} \
     && /bin/cp /etc/apt/sources.list /etc/apt/sources.list.org \
-    && /bin/sed 's/wheezy/testing/g' /etc/apt/sources.list >> /etc/apt/sources.list \
-    && /usr/bin/apt-get update \
-    && /usr/bin/apt-get -y --no-install-recommends -t testing install ${ZENOSS_BUILD_DEPS_TESTING} \
+##    && /bin/sed 's/wheezy/jessie/g' /etc/apt/sources.list >> /etc/apt/sources.list \
+    && /bin/echo 'deb http://deb.debian.org/debian/ jessie main' > /etc/apt/sources.list \
+    && /bin/echo 'deb http://security.debian.org/ jessie/updates main' >> /etc/apt/sources.list \
+    && /usr/bin/apt-get update -o Acquire::Check-Valid-Until=false \
+    && /usr/bin/apt-get -y --no-install-recommends install ${ZENOSS_BUILD_DEPS_TESTING} \
     && /bin/cp /etc/apt/sources.list.org /etc/apt/sources.list \
-    && /usr/bin/apt-get update \
+    && /usr/bin/apt-get update -o Acquire::Check-Valid-Until=false \
 ## download all the things!
-    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/krull/docker-misc/master/init_fs/usr/local/src/snmp-mibs-downloader_1.1_all.deb -O ${BUILD_SRC}/snmp-mibs-downloader_1.1_all.deb \
-    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/krull/docker-misc/master/init_fs/usr/local/src/zenoss-core-425-2108_03c_amd64.deb.tar.gz.00 -O ${BUILD_SRC}/zenoss-core-425-2108_03c_amd64.deb.tar.gz.00 \
-    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/krull/docker-misc/master/init_fs/usr/local/src/zenoss-core-425-2108_03c_amd64.deb.tar.gz.01 -O ${BUILD_SRC}/zenoss-core-425-2108_03c_amd64.deb.tar.gz.01 \
+    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/vencis/docker-misc/master/init_fs/usr/local/src/snmp-mibs-downloader_1.1_all.deb -O ${BUILD_SRC}/snmp-mibs-downloader_1.1_all.deb \
+    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/vencis/docker-misc/master/init_fs/usr/local/src/zenoss-core-425-2108_03c_amd64.deb.tar.gz.00 -O ${BUILD_SRC}/zenoss-core-425-2108_03c_amd64.deb.tar.gz.00 \
+    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/vencis/docker-misc/master/init_fs/usr/local/src/zenoss-core-425-2108_03c_amd64.deb.tar.gz.01 -O ${BUILD_SRC}/zenoss-core-425-2108_03c_amd64.deb.tar.gz.01 \
     && /bin/cat ${BUILD_SRC}/zenoss-core-425-2108_03c_amd64.deb.tar.gz.00 ${BUILD_SRC}/zenoss-core-425-2108_03c_amd64.deb.tar.gz.01 > ${BUILD_SRC}/zenoss-core-425-2108_03c_amd64.deb.tar.gz \
-    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/krull/docker-misc/master/init_fs/usr/local/bin/docker-entrypoint.sh -O /usr/local/bin/docker-entrypoint.sh \
-    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/krull/docker-misc/master/init_fs/etc/insserv/overrides/zenoss -O /etc/insserv/overrides/zenoss \
-    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/krull/docker-misc/master/init_fs/etc/init.d/zenoss -O /etc/init.d/zenoss \
+    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/vencis/docker-misc/master/init_fs/usr/local/bin/docker-entrypoint.sh -O /usr/local/bin/docker-entrypoint.sh \
+    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/vencis/docker-misc/master/init_fs/etc/insserv/overrides/zenoss -O /etc/insserv/overrides/zenoss \
+    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/vencis/docker-misc/master/init_fs/etc/init.d/zenoss -O /etc/init.d/zenoss \
     && /bin/tar zxvf ${BUILD_SRC}/zenoss-core-425-2108_03c_amd64.deb.tar.gz -C ${BUILD_SRC}/ \
 ## install all the things!
     && /usr/bin/dpkg -i ${BUILD_SRC}/snmp-mibs-downloader_1.1_all.deb \
     && /usr/bin/dpkg -i ${BUILD_SRC}/zenoss-core-425-2108_03c_amd64.deb \
-    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/krull/docker-misc/master/init_fs/usr/local/zenoss/etc/zeneventserver.conf -O ${ZENHOME}/etc/zeneventserver.conf \
+    && /usr/bin/wget --no-check-certificate https://raw.githubusercontent.com/vencis/docker-misc/master/init_fs/usr/local/zenoss/etc/zeneventserver.conf -O ${ZENHOME}/etc/zeneventserver.conf \
     && /usr/bin/apt-get -f install \
 ## os cleanup/conditioning
     && /bin/chown -R zenoss:zenoss ${ZENOSSHOME} \
