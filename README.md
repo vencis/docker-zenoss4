@@ -12,9 +12,9 @@ In continuing my journey to learn Docker's Best Practices, I had the need to doc
 
 The dockerized image of zenoss v4.2.5 is aptly named `zenoss4-core`.
 
-The main glue for all of this orchestration is really the [docker-compose.yml file](https://github.com/krull/docker-zenoss4/blob/master/docker-compose.yml) which pulls everything together. You can read more information on `docker-compose` and how to install it on your docker host at [docker's website](https://docs.docker.com/compose/).
+The main glue for all of this orchestration is really the [docker-compose.yml file](https://github.com/vencis/docker-zenoss4/blob/master/docker-compose.yml) which pulls everything together. You can read more information on `docker-compose` and how to install it on your docker host at [docker's website](https://docs.docker.com/compose/).
 
-The [Dockerfile](https://github.com/krull/docker-zenoss4/blob/master/Dockerfile) for the `zenoss4-core` build has directives that points to the necessary hostnames of each dockerized services mentioned above to function properly and collectively. There is a `.dockerignore` file that ignores the whole `init_fs` folder upon build time. Moreover, I have excluded some environmental variables in files called `.env` and `.env_make`. I have added sample `.smpl` files. Just rename them accordingly.
+The [Dockerfile](https://github.com/vencis/docker-zenoss4/blob/master/Dockerfile) for the `zenoss4-core` build has directives that points to the necessary hostnames of each dockerized services mentioned above to function properly and collectively. There is a `.dockerignore` file that ignores the whole `init_fs` folder upon build time. Moreover, I have excluded some environmental variables in files called `.env` and `.env_make`. I have added sample `.smpl` files. Just rename them accordingly.
 
 Many thanks for [hydruid](https://github.com/hydruid/zenoss/) for providing us a way to install zenoss4 on debian-based systems! Thanks for all the fish, Hydruid!
 
@@ -22,7 +22,7 @@ I have tried to build the image with docker best practices in mind. Should there
 
 ## quickstart 
 ```
-root@mcroth:~/sandbox# git clone https://github.com/krull/docker-zenoss4.git
+root@mcroth:~/sandbox# git clone https://github.com/vencis/docker-zenoss4.git
 Cloning into 'docker-zenoss4'...
 remote: Counting objects: 69, done.
 remote: Compressing objects: 100% (53/53), done.
@@ -54,9 +54,9 @@ c75bb844f5d3        mariadb:5.5             "docker-entrypoint.sh"   About a min
 
 Once the init is done, you ought to have a full, 100% working `zenoss4` docker install located at `http://localhost`! Default zenoss logins: `admin`/`zenoss`
 
-For the automated build go to [hub.docker.com](https://hub.docker.com/r/mcroth/docker-zenoss4/).
+For the automated build go to [hub.docker.com](https://hub.docker.com/r/internetportal/docker-zenoss4/).
 
-You can use this image directly from [hub.docker.com](https://hub.docker.com/r/mcroth/docker-zenoss4/) by issuing the following docker commands:
+You can use this image directly from [hub.docker.com](https://hub.docker.com/r/internetportal/docker-zenoss4/) by issuing the following docker commands:
 ```
 docker pull mcroth/docker-zenoss4:latest
 ```
