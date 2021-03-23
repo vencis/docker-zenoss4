@@ -55,6 +55,9 @@ ARG ZENOSS_BUILD_DEPS_DEV="\
     snmp \
     wget \
     openssh-client \
+    vim \
+    less \
+    mysql-client \
     netcat \
     "
 
