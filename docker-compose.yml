@@ -58,7 +58,7 @@ services:
       - "./init_fs/usr/local/zenoss/log:/usr/local/zenoss/log:rw"
       - "./init_fs/usr/local/zenoss/ZenPacks:/usr/local/zenoss/ZenPacks:rw"
       - "./init_fs/home/zenoss/.ssh:/home/zenoss/.ssh:rw"
-      - "./init_fs/zenoss-backups:/zenoss-backups:rw"
+      - "./init_fs/zenoss-backups:/usr/local/zenoss/backups:rw"
     links:
       - zenoss4-memcached
       - zenoss4-rabbitmq
