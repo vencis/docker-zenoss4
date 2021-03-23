@@ -20,7 +20,7 @@ DATE=$(date +%Y%m%d_%H%M)
 DBHOST="zenoss4-mariadb"
 DBUSER="zenoss"
 DBPASS="zenoss"
-BACKUPLOC=/zenoss-backups
+BACKUPLOC=/usr/local/zenoss/backups
 
 # MySQL Backup
 echo "...Starting MySQL Backup"
