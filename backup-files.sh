@@ -19,7 +19,7 @@ export DEFAULT_ZEP_JVM_ARGS="-Djetty.host=localhost -server"
 DATE=$(date +%Y%m%d_%H%M)
 DBUSER="zenoss"
 DBPASS="zenoss"
-BACKUPLOC=/zenoss-backups
+BACKUPLOC=/usr/local/zenoss/backups
 
 # Check User
 if [ `whoami` != 'zenoss' ];
