@@ -140,6 +140,9 @@ RUN \
     && /usr/bin/apt-get -y autoremove \
     && /usr/bin/apt-get -y autoclean \
     && /usr/bin/apt-get -y clean
+    
+COPY backup-files.sh ${ZENHOME}/bin
+COPY backup-sql.sh ${ZENHOME}/bin
 
 # zenoss4 admin console
 EXPOSE 8080
