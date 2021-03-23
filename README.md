@@ -6,7 +6,6 @@ In continuing my journey to learn Docker's Best Practices, I had the need to doc
 
 * [memcached](https://hub.docker.com/_/memcached/), a distributed memory caching system, named `zenoss4-memcached`
 * [rabbitmq](https://hub.docker.com/_/rabbitmq/), the Advanced Message Queuing Protocol (AMQP), named `zenoss4-rabbitmq`
-* [redis](https://hub.docker.com/_/redis/), a networked, in-memory, key-value data store, named `zenoss4-redis`
 * [mariadb](https://hub.docker.com/_/mariadb/), SQL Database backwards compatible to `mysql 5.5`, named `zenoss4-mariadb` 
 * [nginx](https://hub.docker.com/_/nginx/), reverse http proxy, named `zenoss4-nginx`
 
@@ -35,7 +34,6 @@ Creating network "dockerzenoss4_front-tier" with driver "bridge"
 Creating network "dockerzenoss4_back-tier" with driver "bridge"
 Creating zenoss4-memcached
 Creating zenoss4-rabbitmq
-Creating zenoss4-redis
 Creating zenoss4-mariadb
 Creating zenoss4-core
 Creating zenoss4-nginx
@@ -58,7 +56,7 @@ For the automated build go to [hub.docker.com](https://hub.docker.com/r/internet
 
 You can use this image directly from [hub.docker.com](https://hub.docker.com/r/internetportal/docker-zenoss4/) by issuing the following docker commands:
 ```
-docker pull mcroth/docker-zenoss4:latest
+docker pull vencis/docker-zenoss4:latest
 ```
 
 ## ssl encryption
