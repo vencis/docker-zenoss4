@@ -1,35 +1,30 @@
-include .env_make
-NS = internetportal
-VERSION ?= latest
+APP_VERSION = $(strip $(shell cat VERSION))
+GIT_COMMIT = $(strip $(shell git rev-parse --short HEAD))
 
-REPO = docker-zenoss4
-NAME = zenoss4
-INSTANCE = wheezy
+DOCKER_IMAGE ?= internetportal/docker-zenoss4
+DOCKER_TAG = $(APP_VERSION)
 
-.PHONY: build push shell run start stop rm release
+# Build Docker image
+build: docker_build docker_tag output
 
-build:
-	docker build -t $(NS)/$(REPO):$(VERSION) .
+# Build and push Docker image
+release: docker_tag docker_push output
 
-push:
-	docker push $(NS)/$(REPO):$(VERSION)
+default: docker_build output
 
-shell:
-	docker run --rm --name $(NAME)-$(INSTANCE) -i -t $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION) /bin/bash
+docker_build:
+	@docker build \
+		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+		--build-arg VERSION=$(APP_VERSION) \
+		--build-arg VCS_REF=$(GIT_COMMIT) \
+		-t $(DOCKER_IMAGE):$(DOCKER_TAG) .
 
-run:
-	docker run --rm --name $(NAME)-$(INSTANCE) $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION)
+docker_tag:
+	docker tag $(DOCKER_IMAGE):$(DOCKER_TAG) $(DOCKER_IMAGE):latest
 
-start:
-	docker run -d --name $(NAME)-$(INSTANCE) $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION)
+docker_push:
+	docker push $(DOCKER_IMAGE):latest
+	docker push $(DOCKER_IMAGE):$(DOCKER_TAG)
 
-stop:
-	docker stop $(NAME)-$(INSTANCE)
-
-rm:
-	docker rm $(NAME)-$(INSTANCE)
-
-release: build
-	make push -e VERSION=$(VERSION)
-
-default: build
+output:
+	@echo Docker Image: $(DOCKER_IMAGE):$(DOCKER_TAG)
